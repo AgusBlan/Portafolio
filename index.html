@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AGUS BLAN — Imagen y Sonido • Visual • Interactivo</title>
+<link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@500;700;900&family=Space+Grotesk:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box}body{margin:0;font-family:'Space Grotesk',Arial;background:#0b0014;color:white;overflow-x:hidden}
+a{color:inherit;text-decoration:none}
+.bg{position:fixed;inset:0;z-index:-1;background:radial-gradient(600px 400px at 10% 10%,#ff00aa33,transparent),radial-gradient(600px 400px at 90% 20%,#00e5ff33,transparent),radial-gradient(600px 500px at 50% 90%,#a100ff33,transparent),#0b0014}
+.top{position:sticky;top:0;z-index:20;display:flex;justify-content:space-between;align-items:center;padding:14px 16px;background:rgba(11,0,20,.75);backdrop-filter:blur(12px);border-bottom:1px solid #ffffff22}
+.logo{font-family:Unbounded;font-weight:900}.logo span{background:linear-gradient(90deg,#ff00aa,#00e5ff,#a100ff);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.menu{display:flex;gap:8px;flex-wrap:wrap}.menu a{padding:8px 12px;border-radius:20px;background:#ffffff14;border:1px solid #ffffff22;font-size:12px;font-weight:700}.menu a:hover{background:white;color:#0b0014}
+.hero{padding:44px 18px 18px;text-align:center}
+.chip{display:inline-block;padding:7px 14px;border-radius:20px;border:1px solid #ff00aa66;background:#ff00aa18;font-size:12px;font-weight:700;letter-spacing:.5px}
+.hero h1{font-family:Unbounded;font-size:48px;line-height:.9;margin:16px 0}.hero h1 em{font-style:normal;background:linear-gradient(90deg,#ff00aa,#ffd600,#00e5ff,#a100ff);-webkit-background-clip:text;-webkit-text-fill-color:transparent;animation:hue 6s linear infinite}@keyframes hue{to{filter:hue-rotate(360deg)}}
+.hero p{max-width:620px;margin:0 auto;color:#d8c8ff;line-height:1.7}
+.tags{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin:18px 0}.tags span{padding:8px 14px;border-radius:20px;background:#ffffff10;border:1px solid #ffffff22;font-size:13px}
+.btns{display:flex;gap:10px;justify-content:center;flex-wrap:wrap}.btn{border:none;padding:14px 20px;border-radius:16px;font-weight:800;cursor:pointer}.btn-neon{background:linear-gradient(90deg,#ff00aa,#a100ff);color:white;box-shadow:0 10px 30px #ff00aa66}.btn-ghost{background:transparent;color:white;border:1px solid #ffffff33}
+.wrap{max-width:1100px;margin:0 auto;padding:10px 18px 30px}
+h2{font-family:Unbounded;font-size:26px;margin:30px 0 6px}h2 small{display:block;font-family:'Space Grotesk';font-size:14px;font-weight:400;color:#b8a8ff;margin-top:6px}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(270px,1fr));gap:16px;margin-top:14px}
+.card{background:rgba(255,255,255,.06);border:1px solid #ffffff22;border-radius:22px;overflow:hidden;backdrop-filter:blur(10px);transition:.2s;cursor:pointer}.card:hover{transform:translateY(-5px) scale(1.01);border-color:#ff00aa;box-shadow:0 16px 40px #ff00aa44}
+.cover{height:170px;display:flex;align-items:center;justify-content:center;font-size:52px;position:relative;overflow:hidden}.cover:after{content:'';position:absolute;inset:0;background:linear-gradient(180deg,transparent,rgba(0,0,0,.35))}.cover b{position:relative;z-index:1}.cover span{position:absolute;top:10px;left:10px;z-index:2;background:rgba(0,0,0,.5);padding:5px 10px;border-radius:20px;font-size:11px}
+.g1{background:linear-gradient(135deg,#ff00aa,#ff6a00)}.g2{background:linear-gradient(135deg,#00e5ff,#a100ff)}.g3{background:linear-gradient(135deg,#ffd600,#ff00aa)}.g4{background:linear-gradient(135deg,#00ff9a,#00e5ff)}.g5{background:linear-gradient(135deg,#a100ff,#ff00aa)}.g6{background:linear-gradient(135deg,#ff00aa,#00e5ff)}
+.body{padding:14px}.body h3{margin:0;font-size:17px}.body p{font-size:13px;color:#d8c8ff;line-height:1.5}.empty{border:2px dashed #ffffff33;border-radius:22px;padding:22px;text-align:center;color:#b8a8ff}.empty b{color:white}
+.apps{margin-top:18px}.app{background:linear-gradient(135deg,rgba(255,0,170,.15),rgba(0,229,255,.12));border:1px solid #ffffff22;border-radius:22px;padding:16px;margin:12px 0;display:flex;gap:14px;align-items:center;flex-wrap:wrap}.app .ico{width:72px;height:72px;border-radius:18px;display:flex;align-items:center;justify-content:center;font-size:34px;flex-shrink:0}.app h3{margin:0}.app p{margin:6px 0;color:#e8dcff;font-size:14px;line-height:1.5}.app .meta{font-size:12px;color:#b8a8ff}.app .btns{margin-left:auto}
+.modal{position:fixed;inset:0;background:rgba(0,0,0,.7);display:none;align-items:center;justify-content:center;padding:16px;z-index:50}.modal.open{display:flex}.mbox{background:#16002b;border:1px solid #ffffff22;border-radius:24px;max-width:640px;width:100%;padding:20px;max-height:90vh;overflow:auto}.close{float:right;border:none;background:#ffffff20;color:white;width:32px;height:32px;border-radius:50%;cursor:pointer}
+.footer{text-align:center;padding:28px;border-top:1px solid #ffffff22;margin-top:20px}.contact{display:flex;gap:10px;justify-content:center;flex-wrap:wrap}
+@media(max-width:600px){.hero h1{font-size:34px}.app .btns{margin-left:0}}
+</style>
+</head>
+<body>
+<div class="bg"></div>
+<div class="top"><div class="logo">AGUS<span>•BLAN</span></div><div class="menu"><a href="#yo">Yo</a><a href="#proyectos">Proyectos</a><a href="#apps">Apps</a><a href="#contacto">Contacto</a></div></div>
+
+<div class="hero" id="yo">
+<span class="chip">✦ ESTUDIANTE • FADU UBA • BUENOS AIRES ✦</span>
+<h1>IMAGEN Y<br><em>SONIDO</em><br>QUE SE JUEGA</h1>
+<p>Hola, soy Agus. Estudiante de <b>Imagen y Sonido en FADU UBA</b>. Me interesa lo <b>visual, lo interactivo, las películas, la animación, los videojuegos y el diseño</b>. Me gusta que lo que hago se vea, se escuche y se pueda tocar. Por eso también programo mis propias apps.</p>
+<div class="tags"><span>🎬 Películas</span><span>✨ Animación</span><span>🎮 Videojuegos</span><span>🎨 Diseño</span><span>💻 Interactivo</span><span>🔊 Sonido</span></div>
+<div class="btns"><button class="btn btn-neon" onclick="document.getElementById('proyectos').scrollIntoView({behavior:'smooth'})">Ver proyectos ↓</button><button class="btn btn-ghost" onclick="document.getElementById('apps').scrollIntoView({behavior:'smooth'})">Ver mis 3 Apps ↗</button></div>
+</div>
+
+<div class="wrap">
+<h2 id="proyectos">MIS PROYECTOS <small>Vacío a propósito para que lo llenes vos. Tocá 🔒 Admin abajo para agregar los tuyos cuando quieras. Nada inventado.</small></h2>
+<div class="grid" id="gridProyectos">
+<div class="card" onclick="abrir('Agregar tu proyecto','➕','Tocá Admin abajo para agregar tu primer proyecto real.','Nuevo')"><div class="cover g1"><span>VACÍO • TUYO</span><b>➕</b></div><div class="body"><h3>Tu primer proyecto</h3><p>Acá va tu corto, tu animación o tu diseño. Vos lo subís cuando quieras.</p></div></div>
+<div class="card" onclick="abrir('Agregar tu juego','🎮','Acá va tu concept, tu personaje o tu interfaz de juego.','Nuevo')"><div class="cover g2"><span>VACÍO • TUYO</span><b>🎮</b></div><div class="body"><h3>Tu primer juego / concept</h3><p>Personaje, mundo, UI. Todo tuyo, nada inventado.</p></div></div>
+<div class="card" onclick="abrir('Agregar tu diseño','🎨','Acá va tu diseño visual, tu afiche, tu animación.','Nuevo')"><div class="cover g3"><span>VACÍO • TUYO</span><b>🎨</b></div><div class="body"><h3>Tu primer diseño</h3><p>Diseño visual, animación, lo que quieras mostrar.</p></div></div>
+</div>
+<div class="empty"><b>✦ Este espacio es tuyo ✦</b><br>Cuando tengas un proyecto, tocá 🔒 Admin abajo, poné tu contraseña y agregalo. El resto solo lo ve, no lo puede tocar.</div>
+
+<h2 id="apps">MIS APPS • HECHAS POR MÍ <small>Las 3 que ya hiciste, con link directo para entrar.</small></h2>
+<div class="apps">
+<div class="app"><div class="ico g1">🤖</div><div style="flex:1;min-width:220px"><h3>IAgus — Mi IA personalizada</h3><p>Mi asistente con mi estilo. Me ayuda a estudiar, a crear ideas y a organizar mis proyectos de Imagen y Sonido.</p><div class="meta">Cómo entrar: tocá Abrir App • Funciona en celu y tablet • Hecha por mí</div></div><div class="btns"><button class="btn btn-neon" onclick="window.open('https://agusblan.github.io/IAgus/','_blank')">Abrir App ↗</button></div></div>
+<div class="app"><div class="ico g2">🗓️</div><div style="flex:1;min-width:220px"><h3>Agenda — Mi agenda</h3><p>Mi agenda personal para organizar días, tareas y proyectos. Simple, rosita y práctica para usar todos los días.</p><div class="meta">Cómo entrar: tocá Abrir App • Guardá el link en tu celu</div></div><div class="btns"><button class="btn btn-neon" onclick="window.open('https://agusblan.github.io/Agenda-/','_blank')">Abrir App ↗</button></div></div>
+<div class="app"><div class="ico g4">🎬</div><div style="flex:1;min-width:220px"><h3>Study — Mi Estudio FADU</h3><p>Lee PDFs con OCR, crea unidades, hace resumen con IA, cuestionarios y flashcards con IA, audio, resaltador y progreso. Para estudiar en FADU.</p><div class="meta">Cómo entrar: tocá Abrir App • La más completa de las 3</div></div><div class="btns"><button class="btn btn-neon" onclick="window.open('https://agusblan.github.io/Study/','_blank')">Abrir App ↗</button></div></div>
+</div>
+
+<div style="text-align:center;padding:14px"><button onclick="abrirAdmin()" style="background:none;border:none;color:#ffffff66;font-size:12px;cursor:pointer">🔒 Admin • Solo Agus</button></div>
+</div>
+
+<div class="footer" id="contacto"><h2 style="font-family:Unbounded">¿HACEMOS ALGO?</h2><p style="color:#b8a8ff">Si querés que te diseñe algo visual, interactivo o una app, escribime.</p><div class="contact"><a class="btn btn-neon" href="https://instagram.com/" target="_blank">Instagram ↗</a><a class="btn btn-ghost" href="mailto:hola@agusblan.com">Mail ↗</a><a class="btn btn-ghost" href="https://github.com/AgusBlan" target="_blank">GitHub ↗</a></div><p style="font-size:12px;color:#ffffff66;margin-top:14px">Hecho con 💖 por Agus Blan • FADU UBA • 2026</p></div>
+
+<div class="modal" id="modal" onclick="if(event.target.id==='modal')cerrar()"><div class="mbox"><button class="close" onclick="cerrar()">✕</button><div id="mEmoji" style="font-size:50px"></div><h3 id="mTitulo"></h3><p id="mTexto" style="line-height:1.6;color:#d8c8ff"></p><p id="mTags" style="font-weight:700"></p><button class="btn btn-neon" onclick="cerrar()">Cerrar</button></div></div>
+
+<div class="modal" id="modalAdmin"><div class="mbox"><button class="close" onclick="cerrarAdmin()">✕</button><h3>🔒 Solo Agus</h3><div id="adminLogin"><p style="font-size:13px">Poné tu contraseña para editar. El resto solo ve.</p><input id="adminPass" type="password" placeholder="Tu contraseña" style="width:100%;padding:12px;border-radius:12px;border:1px solid #ffffff33;background:#00000033;color:white"><button class="btn btn-neon" onclick="entrarAdmin()" style="margin-top:10px;width:100%">Entrar</button><p id="adminError" style="color:#ff6a9a;display:none">Contraseña incorrecta</p><p style="font-size:11px;color:#999">Ejemplo: agus2026 — cambiala en el código</p></div><div id="adminPanel" style="display:none"><p style="font-size:13px">Estás en modo edición. Tocá cualquier título o texto y editalo.</p><input id="nuevoTitulo" placeholder="Título del proyecto" style="width:100%;padding:10px;border-radius:10px;background:#00000033;color:white;border:1px solid #ffffff33;margin:5px 0"><select id="nuevoCat" style="width:100%;padding:10px;border-radius:10px;background:#16002b;color:white"><option value="cine">🎬 Imagen y Sonido / Película</option><option value="juego">🎮 Videojuego</option><option value="diseno">🎨 Diseño / Animación</option></select><input id="nuevoEmoji" placeholder="Emoji ej: 🎬" style="width:100%;padding:10px;border-radius:10px;background:#00000033;color:white;border:1px solid #ffffff33;margin:5px 0"><textarea id="nuevoTexto" placeholder="De qué trata..." style="width:100%;padding:10px;border-radius:10px;background:#00000033;color:white;border:1px solid #ffffff33"></textarea><input id="nuevoFoto" placeholder="Link de imagen (Drive / Imgur / Instagram)" style="width:100%;padding:10px;border-radius:10px;background:#00000033;color:white;border:1px solid #ffffff33;margin:5px 0"><button class="btn btn-neon" onclick="agregarProyectoAdmin()" style="width:100%;margin-top:8px">+ Agregar proyecto</button><button class="btn btn-ghost" onclick="guardarTodoAdmin()" style="width:100%;margin-top:8px">💾 Guardar todo</button><button class="btn" onclick="salirAdmin()" style="width:100%;margin-top:8px;background:#ffffff20;color:white">Salir</button></div></div></div>
+
+<script>
+function abrir(t,e,txt,tags){document.getElementById('mTitulo').innerText=t;document.getElementById('mEmoji').innerText=e;document.getElementById('mTexto').innerText=txt;document.getElementById('mTags').innerText=tags;document.getElementById('modal').classList.add('open')}
+function cerrar(){document.getElementById('modal').classList.remove('open')}
+const CONTRASENA_ADMIN="agus2026";
+function abrirAdmin(){document.getElementById('modalAdmin').classList.add('open')}
+function cerrarAdmin(){document.getElementById('modalAdmin').classList.remove('open')}
+function entrarAdmin(){if(document.getElementById('adminPass').value===CONTRASENA_ADMIN){document.getElementById('adminLogin').style.display='none';document.getElementById('adminPanel').style.display='block';document.querySelectorAll('.body h3,.body p,.hero h1,.hero p').forEach(el=>{el.contentEditable=true;el.style.outline='2px dashed #ff00aa'});alert('Modo edición activado.')}else{document.getElementById('adminError').style.display='block'}}
+function salirAdmin(){document.querySelectorAll('[contenteditable]').forEach(el=>{el.contentEditable=false;el.style.outline='none'});document.getElementById('adminPanel').style.display='none';document.getElementById('adminLogin').style.display='block';cerrarAdmin()}
+function agregarProyectoAdmin(){let titulo=document.getElementById('nuevoTitulo').value.trim();let emoji=document.getElementById('nuevoEmoji').value.trim()||'✨';let texto=document.getElementById('nuevoTexto').value.trim()||'Proyecto nuevo.';let foto=document.getElementById('nuevoFoto').value.trim();if(!titulo)return alert('Poné el título');let grid=document.getElementById('gridProyectos');let div=document.createElement('div');div.className='card';div.setAttribute('onclick',`abrir('${titulo}','${emoji}','${texto}','Nuevo')`);let cover=foto?`<div class="cover" style="background:url('${foto}') center/cover"><span>NUEVO</span></div>`:`<div class="cover g2"><span>NUEVO</span><b>${emoji}</b></div>`;div.innerHTML=cover+`<div class="body"><h3 contenteditable="true">${titulo}</h3><p contenteditable="true">${texto}</p></div>`;grid.prepend(div);document.getElementById('nuevoTitulo').value='';document.getElementById('nuevoTexto').value='';document.getElementById('nuevoFoto').value='';alert('Proyecto agregado. Tocá Guardar todo.')}
+function guardarTodoAdmin(){localStorage.setItem('portfolio_agus_html',document.documentElement.outerHTML);alert('Guardado. Para que lo vean todos, subí este archivo actualizado a GitHub como index.html y tocá Replace.');salirAdmin()}
+</script>
+</body>
+</html>
