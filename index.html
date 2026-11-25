@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AGUSTINA BLANCO — Imagen y Sonido</title>
+<link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@600;800;900&family=Space+Grotesk:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box}body{margin:0;font-family:'Space Grotesk',Arial;background:#0a0012;color:#fff;overflow:hidden;height:100vh}
+a{color:inherit;text-decoration:none}
+.bg{position:fixed;inset:0;z-index:-1;background:radial-gradient(700px 500px at 15% 10%,#ff009022,transparent),radial-gradient(700px 500px at 90% 90%,#00e5ff22,transparent),radial-gradient(500px 400px at 80% 10%,#a100ff22,transparent),#0a0012}
+.bg:before{content:'';position:absolute;inset:0;background-image:linear-gradient(#ffffff08 1px,transparent 1px),linear-gradient(90deg,#ffffff08 1px,transparent 1px);background-size:44px 44px}
+.layout{display:flex;height:100vh}
+.nav{width:86px;flex-shrink:0;background:rgba(255,255,255,.04);border-right:1px solid #ffffff1a;backdrop-filter:blur(12px);display:flex;flex-direction:column;align-items:center;padding:16px 0;gap:10px}
+.navLogo{font-family:Unbounded;font-weight:900;font-size:20px;text-align:center;line-height:.9}.navLogo span{font-size:10px;letter-spacing:2px;color:#ff5aa8}
+.navBtn{width:62px;height:62px;border-radius:18px;border:1px solid #ffffff1a;background:#ffffff08;cursor:pointer;font-size:24px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;transition:.15s}.navBtn small{font-size:8px;letter-spacing:1px;font-weight:700}.navBtn.sel{background:linear-gradient(135deg,#ff0090,#a100ff);border-color:transparent;box-shadow:0 0 24px #ff009066;transform:scale(1.05)}
+.navFoot{margin-top:auto;text-align:center;font-size:10px;color:#ffffff88;line-height:1.4}.navFoot a{display:block;color:#fff;font-weight:700}
+.main{flex:1;overflow-y:auto;padding:22px 22px 40px}
+.top{display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:12px}
+.pill{display:inline-block;padding:6px 12px;border-radius:20px;border:1px solid #ff009055;background:#ff009011;font-size:11px;letter-spacing:1px;font-weight:700}
+h1{font-family:Unbounded;font-size:54px;line-height:.9;margin:14px 0 8px}h1 em{font-style:normal;background:linear-gradient(90deg,#ff0090,#ffd600,#00e5ff,#a100ff);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.sub{max-width:620px;color:#cbb8e8;line-height:1.6;font-size:15px}
+.chips{display:flex;gap:8px;flex-wrap:wrap;margin:14px 0}.chips span{padding:8px 12px;border-radius:20px;background:#ffffff10;border:1px solid #ffffff1a;font-size:12px}
+.search{margin:16px 0;display:flex;gap:8px;flex-wrap:wrap}.search input{flex:1;min-width:220px;padding:13px 16px;border-radius:14px;background:#ffffff0d;border:1px solid #ffffff22;color:white;outline:none}.search button{padding:13px 18px;border:none;border-radius:14px;background:white;color:#0a0012;font-weight:800;cursor:pointer}
+.section{display:none}.section.show{display:block}
+.section h2{font-family:Unbounded;font-size:24px;margin:22px 0 4px}.section p.desc{color:#cbb8e8;margin:0 0 14px;font-size:14px}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:14px}
+.char{background:linear-gradient(180deg,rgba(255,255,255,.08),rgba(255,255,255,.02));border:1px solid #ffffff22;border-radius:20px;padding:12px;cursor:pointer;transition:.15s;position:relative;overflow:hidden}.char:hover{transform:translateY(-4px);border-color:#ff0090;box-shadow:0 14px 30px #ff009033}.char .ava{height:150px;border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:58px;position:relative}.char .ava span{position:absolute;top:8px;left:8px;background:rgba(0,0,0,.55);padding:4px 8px;border-radius:20px;font-size:10px}.char h3{margin:10px 0 2px;font-size:15px}.char p{margin:0;color:#cbb8e8;font-size:12px;line-height:1.4}.char .lv{margin-top:8px;height:6px;background:#ffffff1a;border-radius:10px;overflow:hidden}.char .lv div{height:100%;background:linear-gradient(90deg,#ff0090,#00e5ff)}
+.c1{background:linear-gradient(135deg,#ff0090,#ff6a00)}.c2{background:linear-gradient(135deg,#00e5ff,#a100ff)}.c3{background:linear-gradient(135deg,#ffd600,#ff0090)}.c4{background:linear-gradient(135deg,#00ff9a,#00e5ff)}.c5{background:linear-gradient(135deg,#a100ff,#ff0090)}.c6{background:linear-gradient(135deg,#ff0090,#00e5ff)}
+.detail{background:#14001f;border:1px solid #ffffff22;border-radius:24px;padding:18px;margin-top:14px;display:none}.detail.open{display:block}
+.detailTabs{display:flex;gap:8px;flex-wrap:wrap;margin:12px 0}.detailTabs button{padding:9px 14px;border-radius:20px;border:1px solid #ffffff22;background:#ffffff10;color:white;cursor:pointer;font-weight:700}.detailTabs button.sel{background:#ff0090;border-color:#ff0090}
+.detailPane{display:none}.detailPane.show{display:block}
+.gallery{display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:10px;margin-top:10px}.gallery div{height:110px;border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:32px}
+.apps{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:14px;margin-top:14px}.appCard{background:linear-gradient(135deg,rgba(255,0,144,.16),rgba(0,229,255,.1));border:1px solid #ffffff22;border-radius:20px;padding:16px}.appCard h3{margin:0}.appCard p{color:#d8c8ff;font-size:13px;line-height:1.5}.appCard button{margin-top:10px;padding:11px 16px;border:none;border-radius:12px;background:white;color:#0a0012;font-weight:800;cursor:pointer;width:100%}
+.contactBar{margin-top:22px;display:flex;gap:10px;flex-wrap:wrap;align-items:center;background:#ffffff08;border:1px solid #ffffff1a;border-radius:18px;padding:14px}.contactBar b{font-family:Unbounded}.contactBar a{padding:10px 14px;border-radius:20px;background:#ffffff10;border:1px solid #ffffff22;font-size:13px;font-weight:700}
+.loginBox{display:none;max-width:360px;margin:0 auto 18px;background:#16002b;border:1px solid #ffffff22;border-radius:20px;padding:16px}.loginBox input{width:100%;padding:11px;border-radius:12px;background:#00000033;color:white;border:1px solid #ffffff33;margin:6px 0}.loginBox button{width:100%;padding:12px;border:none;border-radius:12px;font-weight:800;cursor:pointer;margin-top:6px}.btnReg{background:#ffffff20;color:white}.btnLogin{background:linear-gradient(90deg,#ff0090,#a100ff);color:white}
+.editBar{display:none;max-width:640px;margin:0 auto 14px;background:linear-gradient(90deg,#ff0090,#a100ff);border-radius:16px;padding:12px;text-align:center}.editBar button{padding:10px 16px;border:none;border-radius:12px;background:white;color:#0a0012;font-weight:800;cursor:pointer;margin:6px 4px}
+.dotBtn{background:none;border:none;color:#ffffff22;font-size:14px;cursor:pointer}
+@media(max-width:720px){body{overflow:auto}.layout{flex-direction:column;height:auto}.nav{width:100%;flex-direction:row;padding:10px;overflow-x:auto}.navFoot{display:none}.main{padding:16px}h1{font-size:36px}.navBtn{width:54px;height:54px;flex-shrink:0}}
+</style>
+</head>
+<body>
+<div class="bg"></div>
+<div class="layout">
+<div class="nav">
+<div class="navLogo">AB<br><span>PORTFOLIO</span></div>
+<button class="navBtn sel" onclick="go('inicio',this)">🏠<small>INICIO</small></button>
+<button class="navBtn" onclick="go('juegos',this)">🎮<small>JUEGOS</small></button>
+<button class="navBtn" onclick="go('animacion',this)">✨<small>ANIMACIÓN</small></button>
+<button class="navBtn" onclick="go('peliculas',this)">🎬<small>PELÍCULAS</small></button>
+<button class="navBtn" onclick="go('diseno',this)">🎨<small>DISEÑO</small></button>
+<button class="navBtn" onclick="go('apps',this)">📱<small>APPS</small></button>
+<div class="navFoot"><a href="https://instagram.com/webotzilla" target="_blank">@webotzilla</a>AGUS<br>2026</div>
+</div>
+
+<div class="main">
+<div class="top"><span class="pill">● DISPONIBLE PARA PROYECTOS</span><span style="font-size:12px;color:#cbb8e8">BUENOS AIRES • FADU UBA</span></div>
+
+<div class="section show" id="s-inicio">
+<h1>AGUSTINA<br><em>BLANCO</em></h1>
+<p class="sub">Imagen y Sonido — FADU UBA. Me interesa lo visual, lo interactivo, la animación, los videojuegos, el diseño y las películas. Trabajo entre lo que se ve, lo que se escucha y lo que se puede jugar.</p>
+<div class="chips"><span>🎬 Películas</span><span>✨ Animación</span><span>🎮 Videojuegos</span><span>🎨 Diseño</span><span>💻 Interactivo</span><span>🔊 Sonido</span></div>
+<div class="search"><input id="buscar" placeholder="Buscar: personaje, juego, animación..." oninput="buscar()"><button onclick="go('juegos',document.querySelectorAll('.navBtn')[1])">Explorar →</button></div>
+<div class="grid">
+<div class="char" onclick="go('juegos',document.querySelectorAll('.navBtn')[1])"><div class="ava c2"><span>🎮 BASE</span>🎮</div><h3>Videojuegos</h3><p>Personajes, concepts, mundos y UI.</p><div class="lv"><div style="width:92%"></div></div></div>
+<div class="char" onclick="go('animacion',document.querySelectorAll('.navBtn')[2])"><div class="ava c3"><span>✨ BASE</span>✨</div><h3>Animación</h3><p>Tests, loops, personajes animados.</p><div class="lv"><div style="width:88%"></div></div></div>
+<div class="char" onclick="go('peliculas',document.querySelectorAll('.navBtn')[3])"><div class="ava c1"><span>🎬 BASE</span>🎬</div><h3>Películas</h3><p>Cortos, montaje y sonido.</p><div class="lv"><div style="width:84%"></div></div></div>
+<div class="char" onclick="go('diseno',document.querySelectorAll('.navBtn')[4])"><div class="ava c5"><span>🎨 BASE</span>🎨</div><h3>Diseño</h3><p>Visual, afiches, interfaces.</p><div class="lv"><div style="width:90%"></div></div></div>
+</div>
+<div class="contactBar"><b>AGUSTINA BLANCO</b><span style="color:#cbb8e8;font-size:13px">Imagen y Sonido • FADU UBA</span><a href="https://instagram.com/webotzilla" target="_blank">Instagram — @webotzilla ↗</a><a href="mailto:agusblan2002@gmail.com">agusblan2002@gmail.com ↗</a></div>
+</div>
+
+<div class="section" id="s-juegos">
+<h2>🎮 VIDEOJUEGOS</h2><p class="desc">Elegí un juego. Cada uno se abre con sus personajes, concepts y fondos.</p>
+<div class="grid" id="gridJuegos">
+<div class="char" data-name="Juego 01" onclick="openGame('Juego 01','🎮','Mundo neón. Acción + exploración.','c2')"><div class="ava c2"><span>JUEGO 01</span>🎮</div><h3>Juego 01</h3><p>Concept, personajes y mundo.</p><div class="lv"><div style="width:90%"></div></div></div>
+<div class="char" data-name="Juego 02" onclick="openGame('Juego 02','🧚','Aventura suave, personajes con historia.','c5')"><div class="ava c5"><span>JUEGO 02</span>🧚</div><h3>Juego 02</h3><p>Personajes y fondos.</p><div class="lv"><div style="width:82%"></div></div></div>
+<div class="char" data-name="Juego 03" onclick="openGame('Juego 03','👾','Arcade, rápido, con UI propia.','c1')"><div class="ava c1"><span>JUEGO 03</span>👾</div><h3>Juego 03</h3><p>UI, sprites y nivel.</p><div class="lv"><div style="width:78%"></div></div></div>
+</div>
+<div class="detail" id="detailJuego">
+<h3 id="gameTitle" style="font-family:Unbounded;margin:0">Juego</h3>
+<p id="gameDesc" style="color:#cbb8e8"></p>
+<div class="detailTabs"><button class="sel" onclick="tabGame('personajes',this)">👤 Personajes</button><button onclick="tabGame('concepts',this)">🎨 Concepts</button><button onclick="tabGame('fondos',this)">🌆 Fondos</button><button onclick="tabGame('ui',this)">🕹️ UI / Gameplay</button></div>
+<div class="detailPane show" id="pane-personajes"><div class="gallery"><div class="c2">🧚</div><div class="c5">🤖</div><div class="c1">👾</div><div class="c3">🐱</div></div><p style="color:#cbb8e8;font-size:13px">Personajes del juego. Personalidad, historia y paleta.</p></div>
+<div class="detailPane" id="pane-concepts"><div class="gallery"><div class="c3">✏️</div><div class="c2">🎨</div><div class="c4">🖼️</div><div class="c5">📐</div></div><p style="color:#cbb8e8;font-size:13px">Concepts, bocetos y exploración visual.</p></div>
+<div class="detailPane" id="pane-fondos"><div class="gallery"><div class="c4">🌆</div><div class="c1">🌃</div><div class="c2">🏙️</div><div class="c6">🌌</div></div><p style="color:#cbb8e8;font-size:13px">Fondos, mundos y atmósfera.</p></div>
+<div class="detailPane" id="pane-ui"><div class="gallery"><div class="c6">🕹️</div><div class="c3">🎮</div><div class="c2">🧩</div><div class="c4">⚙️</div></div><p style="color:#cbb8e8;font-size:13px">Interfaz, HUD, botones y cómo se juega.</p></div>
+</div>
+</div>
+
+<div class="section" id="s-animacion">
+<h2>✨ ANIMACIÓN</h2><p class="desc">Loops, tests y personajes animados.</p>
+<div class="grid">
+<div class="char" onclick="openGame('Loop 01','✨','Loop corto, movimiento y timing.','c3')"><div class="ava c3"><span>LOOP</span>✨</div><h3>Loop 01</h3><p>Animación corta.</p><div class="lv"><div style="width:85%"></div></div></div>
+<div class="char" onclick="openGame('Personaje Animado','🧚','Personaje animado, expresiones y acting.','c5')"><div class="ava c5"><span>PERSONAJE</span>🧚</div><h3>Personaje Animado</h3><p>Acting y expresiones.</p><div class="lv"><div style="width:90%"></div></div></div>
+</div>
+</div>
+
+<div class="section" id="s-peliculas">
+<h2>🎬 PELÍCULAS</h2><p class="desc">Cortos, montaje y sonido.</p>
+<div class="grid">
+<div class="char" onclick="openGame('Corto 01','🎬','Corto FADU. Dirección, montaje y sonido.','c1')"><div class="ava c1"><span>CORTO</span>🎬</div><h3>Corto 01</h3><p>Dirección y montaje.</p><div class="lv"><div style="width:88%"></div></div></div>
+<div class="char" onclick="openGame('Diseño Sonoro','🔊','Paisaje sonoro, foley y mezcla.','c2')"><div class="ava c2"><span>SONIDO</span>🔊</div><h3>Diseño Sonoro</h3><p>Foley y mezcla.</p><div class="lv"><div style="width:86%"></div></div></div>
+</div>
+</div>
+
+<div class="section" id="s-diseno">
+<h2>🎨 DISEÑO</h2><p class="desc">Visual, afiches e interfaces.</p>
+<div class="grid">
+<div class="char" onclick="openGame('Afiche 01','🎨','Afiche y sistema visual.','c3')"><div class="ava c3"><span>AFICHE</span>🎨</div><h3>Afiche 01</h3><p>Sistema visual.</p><div class="lv"><div style="width:84%"></div></div></div>
+<div class="char" onclick="openGame('UI 01','💻','Interfaz, botones y tipografía.','c4')"><div class="ava c4"><span>UI</span>💻</div><h3>UI 01</h3><p>Interfaz y UX.</p><div class="lv"><div style="width:89%"></div></div></div>
+</div>
+</div>
+
+<div class="section" id="s-apps">
+<h2>📱 APPS</h2><p class="desc">Mis aplicaciones. Las diseñé y las programé.</p>
+<div class="apps">
+<div class="appCard"><div style="font-size:36px">🤖</div><h3>IAgus</h3><p>Mi IA personalizada. Me ayuda a estudiar y a crear.</p><button onclick="window.open('https://agusblan.github.io/IAgus/','_blank')">Abrir App ↗</button></div>
+<div class="appCard"><div style="font-size:36px">🗓️</div><h3>Agenda</h3><p>Mi agenda. Tareas, días y proyectos.</p><button onclick="window.open('https://agusblan.github.io/Agenda-/','_blank')">Abrir App ↗</button></div>
+<div class="appCard"><div style="font-size:36px">🎬</div><h3>Study — Mi Estudio</h3><p>Lee PDFs con OCR, resumen con IA, cuestionarios y flashcards con IA, audio y progreso. Para FADU.</p><button onclick="window.open('https://agusblan.github.io/Study/','_blank')">Abrir App ↗</button></div>
+</div>
+</div>
+
+<div class="contactBar"><b>AGUSTINA BLANCO</b><span style="color:#cbb8e8;font-size:13px">Imagen y Sonido • FADU UBA</span><a href="https://instagram.com/webotzilla" target="_blank">Instagram — @webotzilla ↗</a><a href="mailto:agusblan2002@gmail.com">agusblan2002@gmail.com ↗</a></div>
+
+<div style="text-align:center;padding:12px"><button class="dotBtn" onclick="document.getElementById('loginBox').style.display='block'">•</button></div>
+<div class="loginBox" id="loginBox">
+<h3 style="margin:0;font-family:Unbounded;font-size:15px">Mi cuenta</h3>
+<input id="emailLogin" placeholder="Tu mail">
+<input id="passLogin" type="password" placeholder="Tu contraseña">
+<button class="btnReg" onclick="registrarme()">Registrarme</button>
+<button class="btnLogin" onclick="login()">Entrar</button>
+<p id="authMsg" style="font-size:12px;color:#ff8fb8"></p>
+</div>
+<div class="editBar" id="editBar">
+<b>Estás logueada ✅</b><br><span style="font-size:12px">Tocá cualquier título o texto para editarlo.</span><br>
+<button onclick="guardarCambios()">💾 Guardar cambios</button>
+<button onclick="salir()">Salir</button>
+</div>
+
+</div>
+</div>
+
+<script>
+function go(id,btn){document.querySelectorAll('.section').forEach(s=>s.classList.remove('show'));document.getElementById('s-'+id).classList.add('show');document.querySelectorAll('.navBtn').forEach(b=>b.classList.remove('sel'));if(btn)btn.classList.add('sel');window.scrollTo({top:0,behavior:'smooth'});}
+function buscar(){let q=document.getElementById('buscar').value.toLowerCase();if(!q)return;go('juegos',document.querySelectorAll('.navBtn')[1]);document.querySelectorAll('#gridJuegos .char').forEach(c=>{c.style.display=c.dataset.name.toLowerCase().includes(q)?'block':'none';});}
+function openGame(titulo,emoji,desc,cls){go('juegos',document.querySelectorAll('.navBtn')[1]);let d=document.getElementById('detailJuego');d.classList.add('open');document.getElementById('gameTitle').innerText=emoji+' '+titulo;document.getElementById('gameDesc').innerText=desc;d.scrollIntoView({behavior:'smooth'});}
+function tabGame(id,btn){document.querySelectorAll('.detailTabs button').forEach(b=>b.classList.remove('sel'));btn.classList.add('sel');document.querySelectorAll('.detailPane').forEach(p=>p.classList.remove('show'));document.getElementById('pane-'+id).classList.add('show');}
+</script>
+
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>
+<script>
+const firebaseConfig={apiKey:"TU_API_KEY",authDomain:"portfolio-agus.firebaseapp.com",projectId:"portfolio-agus"};
+firebase.initializeApp(firebaseConfig);
+const auth=firebase.auth(); const db=firebase.firestore();
+async function registrarme(){let e=document.getElementById('emailLogin').value;let p=document.getElementById('passLogin').value;if(p.length<6)return alert('Tu contraseña tiene que tener 6 caracteres mínimo');try{await auth.createUserWithEmailAndPassword(e,p);document.getElementById('authMsg').innerText='Cuenta creada ✅ Ya podés entrar.';}catch(err){document.getElementById('authMsg').innerText=err.message;}}
+async function login(){let e=document.getElementById('emailLogin').value;let p=document.getElementById('passLogin').value;try{await auth.signInWithEmailAndPassword(e,p);}catch(err){document.getElementById('authMsg').innerText='Mail o contraseña incorrectos';}}
+function salir(){auth.signOut();location.reload();}
+function guardarCambios(){let data={titulo:document.querySelector('h1').innerText,sub:document.querySelector('.sub').innerText,fecha:new Date().toISOString()};db.collection('portfolio').doc('contenido').set(data).then(()=>alert('Guardado ✅')).catch(()=>alert('Guardado local.'));localStorage.setItem('portfolio_agus_editado',JSON.stringify(data));}
+auth.onAuthStateChanged(user=>{if(user){document.getElementById('loginBox').style.display='none';document.getElementById('editBar').style.display='block';document.querySelectorAll('.char h3,.char p,h1,.sub,.appCard h3,.appCard p').forEach(el=>{el.contentEditable=true;el.style.outline='1px dashed #ff0090';});}});
+</script>
+</body>
+</html>
