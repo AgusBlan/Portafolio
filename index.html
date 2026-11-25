@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AGUSTINA BLANCO — Imagen y Sonido</title>
+<link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@700;900&family=Space+Grotesk:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box}
+body{margin:0;font-family:'Space Grotesk',Arial;background:#0a0012;color:#fff}
+a{color:inherit;text-decoration:none}
+.bg{position:fixed;inset:0;z-index:-1;background:radial-gradient(800px 500px at 10% 0%,#ff009022,transparent),radial-gradient(800px 500px at 90% 100%,#00e5ff1f,transparent),#0a0012}
+.bg:before{content:'';position:absolute;inset:0;background-image:linear-gradient(#ffffff08 1px,transparent 1px),linear-gradient(90deg,#ffffff08 1px,transparent 1px);background-size:44px 44px}
+
+/* MENU PANTALLA COMPLETA */
+#menu{position:fixed;inset:0;z-index:50;background:#0a0012;display:flex;flex-direction:column;overflow-y:auto;transition:.4s}
+#menu.hide{transform:translateY(-100%);opacity:0;pointer-events:none}
+.menuTop{display:flex;justify-content:space-between;align-items:center;padding:20px 22px}
+.menuTop b{font-family:Unbounded;font-size:18px;letter-spacing:1px}
+.menuTop span{font-size:12px;color:#cbb8e8;border:1px solid #ffffff22;padding:7px 12px;border-radius:20px}
+.hero{padding:10px 22px 16px}
+.hero h1{font-family:Unbounded;font-size:clamp(44px,9vw,84px);line-height:.92;margin:8px 0}
+.hero h1 em{font-style:normal;background:linear-gradient(90deg,#ff0090,#ffd600,#00e5ff);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.hero p{font-size:18px;line-height:1.6;color:#e6dcff;max-width:680px;margin:0}
+.hero .tags{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px}
+.hero .tags span{background:#ffffff12;border:1px solid #ffffff22;padding:9px 14px;border-radius:20px;font-size:14px;font-weight:700}
+.menuGrid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;padding:14px 22px 22px;flex:1}
+.mCard{border-radius:26px;padding:20px;cursor:pointer;min-height:210px;display:flex;flex-direction:column;justify-content:flex-end;position:relative;overflow:hidden;border:1px solid #ffffff22;transition:.2s}
+.mCard:hover{transform:scale(1.02);border-color:#fff}
+.mCard .big{font-size:56px}
+.mCard h3{font-family:Unbounded;font-size:22px;margin:10px 0 4px}
+.mCard p{font-size:15px;line-height:1.5;color:#f0e8ff;margin:0}
+.mCard .go{margin-top:12px;background:#fff;color:#0a0012;display:inline-block;padding:9px 14px;border-radius:20px;font-weight:800;font-size:13px;width:fit-content}
+.c1{background:linear-gradient(135deg,#ff0090,#ff6a00)}
+.c2{background:linear-gradient(135deg,#00e5ff,#a100ff)}
+.c3{background:linear-gradient(135deg,#ffd600,#ff0090)}
+.c4{background:linear-gradient(135deg,#00ff9a,#00e5ff)}
+.c5{background:linear-gradient(135deg,#a100ff,#ff0090)}
+.c6{background:linear-gradient(135deg,#ff0090,#00e5ff)}
+.menuFoot{padding:18px 22px;border-top:1px solid #ffffff1a;display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px;font-size:14px;color:#d8c8ff}
+
+/* CONTENIDO */
+.page{display:none;min-height:100vh;padding:22px}
+.page.show{display:block}
+.pageTop{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}
+.back{padding:12px 18px;border-radius:20px;background:#ffffff12;border:1px solid #ffffff22;color:white;font-weight:800;cursor:pointer;font-size:15px}
+.page h2{font-family:Unbounded;font-size:clamp(30px,6vw,48px);margin:18px 0 6px}
+.page .desc{font-size:17px;line-height:1.6;color:#e6dcff;max-width:700px}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:16px;margin-top:20px}
+.char{background:#ffffff0d;border:1px solid #ffffff22;border-radius:24px;padding:14px;cursor:pointer;transition:.15s}
+.char:hover{transform:translateY(-4px);border-color:#ff0090}
+.char .ava{height:170px;border-radius:18px;display:flex;align-items:center;justify-content:center;font-size:64px}
+.char h3{font-size:19px;margin:12px 0 4px}
+.char p{font-size:15px;line-height:1.5;color:#e6dcff;margin:0}
+.detail{background:#16002b;border:1px solid #ffffff22;border-radius:24px;padding:20px;margin-top:18px;display:none}
+.detail.open{display:block}
+.detailTabs{display:flex;gap:8px;flex-wrap:wrap;margin:14px 0}
+.detailTabs button{padding:11px 16px;border-radius:20px;border:1px solid #ffffff22;background:#ffffff12;color:white;font-weight:700;cursor:pointer;font-size:14px}
+.detailTabs button.sel{background:#ff0090}
+.detailPane{display:none}
+.detailPane.show{display:block}
+.gallery{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:12px}
+.gallery div{height:130px;border-radius:16px;display:flex;align-items:center;justify-content:center;font-size:38px}
+.apps{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px;margin-top:20px}
+.appCard{background:linear-gradient(135deg,#ff009022,#00e5ff18);border:1px solid #ffffff22;border-radius:24px;padding:20px}
+.appCard h3{font-size:20px;margin:8px 0}
+.appCard p{font-size:15px;line-height:1.6;color:#e6dcff}
+.appCard button{width:100%;padding:13px;border:none;border-radius:14px;background:white;color:#0a0012;font-weight:800;cursor:pointer;font-size:15px;margin-top:10px}
+
+/* CONTACTO ABAJO DE TODO */
+.footer{margin-top:40px;background:#ffffff08;border:1px solid #ffffff1a;border-radius:22px;padding:22px;display:flex;justify-content:space-between;flex-wrap:wrap;gap:16px;align-items:center}
+.footer b{font-family:Unbounded;font-size:20px}
+.footer p{margin:4px 0;color:#e6dcff;font-size:15px;line-height:1.5}
+.footer a{display:inline-block;padding:12px 16px;border-radius:20px;background:#ffffff12;border:1px solid #ffffff22;font-weight:700;font-size:15px;margin:4px 4px 0 0}
+.loginBox{display:none;max-width:360px;margin:16px auto;background:#16002b;border:1px solid #ffffff22;border-radius:20px;padding:16px}
+.loginBox input{width:100%;padding:12px;border-radius:12px;background:#00000033;color:white;border:1px solid #ffffff33;margin:6px 0}
+.loginBox button{width:100%;padding:12px;border:none;border-radius:12px;font-weight:800;cursor:pointer;margin-top:6px}
+.editBar{display:none;max-width:640px;margin:16px auto;background:linear-gradient(90deg,#ff0090,#a100ff);border-radius:16px;padding:12px;text-align:center}
+.editBar button{padding:10px 16px;border:none;border-radius:12px;background:white;color:#0a0012;font-weight:800;cursor:pointer;margin:6px 4px}
+
+@media(max-width:720px){
+.menuGrid{grid-template-columns:1fr 1fr}
+.mCard{min-height:180px;padding:16px}
+.mCard h3{font-size:18px}
+.hero h1{font-size:48px}
+}
+</style>
+</head>
+<body>
+<div class="bg"></div>
+
+<!-- MENU PANTALLA COMPLETA -->
+<div id="menu">
+<div class="menuTop"><b>AGUSTINA BLANCO</b><span>BUENOS AIRES • FADU UBA</span></div>
+<div class="hero">
+<h1>AGUSTINA<br><em>BLANCO</em></h1>
+<p>Imagen y Sonido — FADU UBA. Me interesa lo visual, lo interactivo, la animación, los videojuegos, el diseño y las películas.</p>
+<div class="tags"><span>🎬 Películas</span><span>✨ Animación</span><span>🎮 Videojuegos</span><span>🎨 Diseño</span><span>💻 Interactivo</span></div>
+</div>
+<div class="menuGrid">
+<div class="mCard c2" onclick="openPage('juegos')"><div class="big">🎮</div><h3>VIDEOJUEGOS</h3><p>Personajes, concepts, mundos y UI. Elegí un juego y entrá.</p><span class="go">Entrar →</span></div>
+<div class="mCard c3" onclick="openPage('animacion')"><div class="big">✨</div><h3>ANIMACIÓN</h3><p>Loops, tests y personajes animados.</p><span class="go">Entrar →</span></div>
+<div class="mCard c1" onclick="openPage('peliculas')"><div class="big">🎬</div><h3>PELÍCULAS</h3><p>Cortos, montaje y sonido.</p><span class="go">Entrar →</span></div>
+<div class="mCard c5" onclick="openPage('diseno')"><div class="big">🎨</div><h3>DISEÑO</h3><p>Visual, afiches e interfaces.</p><span class="go">Entrar →</span></div>
+<div class="mCard c4" onclick="openPage('apps')"><div class="big">📱</div><h3>APPS</h3><p>Mis aplicaciones. Las diseñé y las programé.</p><span class="go">Entrar →</span></div>
+<div class="mCard c6" onclick="openPage('sobre')"><div class="big">👤</div><h3>SOBRE MÍ</h3><p>Quién soy, qué me gusta, qué hago.</p><span class="go">Entrar →</span></div>
+</div>
+<div class="menuFoot"><span>Imagen y Sonido • Animación • Videojuegos • Interacción • Películas</span><span>Agustina Blanco • 2026</span></div>
+</div>
+
+<!-- JUEGOS -->
+<div class="page" id="p-juegos">
+<div class="pageTop"><button class="back" onclick="backMenu()">← Menú</button><span>🎮 VIDEOJUEGOS</span></div>
+<h2>VIDEOJUEGOS</h2><p class="desc">Elegí un juego. Cada uno se abre con sus personajes, concepts y fondos.</p>
+<div class="grid">
+<div class="char" onclick="openGame('Juego 01','🎮','Mundo neón. Acción + exploración.')"><div class="ava c2">🎮</div><h3>Juego 01</h3><p>Concept, personajes y mundo.</p></div>
+<div class="char" onclick="openGame('Juego 02','🧚','Aventura suave, personajes con historia.')"><div class="ava c5">🧚</div><h3>Juego 02</h3><p>Personajes y fondos.</p></div>
+<div class="char" onclick="openGame('Juego 03','👾','Arcade, rápido, con UI propia.')"><div class="ava c1">👾</div><h3>Juego 03</h3><p>UI, sprites y nivel.</p></div>
+</div>
+<div class="detail" id="detailJuego">
+<h3 id="gameTitle" style="font-family:Unbounded">Juego</h3><p id="gameDesc" style="font-size:16px;color:#e6dcff"></p>
+<div class="detailTabs"><button class="sel" onclick="tabGame('personajes',this)">👤 Personajes</button><button onclick="tabGame('concepts',this)">🎨 Concepts</button><button onclick="tabGame('fondos',this)">🌆 Fondos</button><button onclick="tabGame('ui',this)">🕹️ UI / Gameplay</button></div>
+<div class="detailPane show" id="pane-personajes"><div class="gallery"><div class="c2">🧚</div><div class="c5">🤖</div><div class="c1">👾</div><div class="c3">🐱</div></div><p style="font-size:15px;color:#e6dcff">Personajes del juego. Personalidad, historia y paleta.</p></div>
+<div class="detailPane" id="pane-concepts"><div class="gallery"><div class="c3">✏️</div><div class="c2">🎨</div><div class="c4">🖼️</div><div class="c5">📐</div></div><p style="font-size:15px;color:#e6dcff">Concepts, bocetos y exploración visual.</p></div>
+<div class="detailPane" id="pane-fondos"><div class="gallery"><div class="c4">🌆</div><div class="c1">🌃</div><div class="c2">🏙️</div><div class="c6">🌌</div></div><p style="font-size:15px;color:#e6dcff">Fondos, mundos y atmósfera.</p></div>
+<div class="detailPane" id="pane-ui"><div class="gallery"><div class="c6">🕹️</div><div class="c3">🎮</div><div class="c2">🧩</div><div class="c4">⚙️</div></div><p style="font-size:15px;color:#e6dcff">Interfaz, HUD, botones y cómo se juega.</p></div>
+</div>
+<div class="footer"><div><b>AGUSTINA BLANCO</b><p>Imagen y Sonido • FADU UBA<br>Animación • Videojuegos • Interacción • Películas</p></div><div><a href="https://instagram.com/webotzilla" target="_blank">Instagram — @webotzilla ↗</a><a href="mailto:agusblan2002@gmail.com">agusblan2002@gmail.com ↗</a></div></div>
+</div>
+
+<!-- ANIMACION -->
+<div class="page" id="p-animacion">
+<div class="pageTop"><button class="back" onclick="backMenu()">← Menú</button><span>✨ ANIMACIÓN</span></div>
+<h2>ANIMACIÓN</h2><p class="desc">Loops, tests y personajes animados.</p>
+<div class="grid">
+<div class="char" onclick="openGame('Loop 01','✨','Loop corto, movimiento y timing.')"><div class="ava c3">✨</div><h3>Loop 01</h3><p>Animación corta.</p></div>
+<div class="char" onclick="openGame('Personaje Animado','🧚','Personaje animado, expresiones y acting.')"><div class="ava c5">🧚</div><h3>Personaje Animado</h3><p>Acting y expresiones.</p></div>
+</div>
+<div class="footer"><div><b>AGUSTINA BLANCO</b><p>Imagen y Sonido • FADU UBA</p></div><div><a href="https://instagram.com/webotzilla" target="_blank">Instagram — @webotzilla ↗</a><a href="mailto:agusblan2002@gmail.com">agusblan2002@gmail.com ↗</a></div></div>
+</div>
+
+<!-- PELICULAS -->
+<div class="page" id="p-peliculas">
+<div class="pageTop"><button class="back" onclick="backMenu()">← Menú</button><span>🎬 PELÍCULAS</span></div>
+<h2>PELÍCULAS</h2><p class="desc">Cortos, montaje y sonido.</p>
+<div class="grid">
+<div class="char" onclick="openGame('Corto 01','🎬','Corto FADU. Dirección, montaje y sonido.')"><div class="ava c1">🎬</div><h3>Corto 01</h3><p>Dirección y montaje.</p></div>
+<div class="char" onclick="openGame('Diseño Sonoro','🔊','Paisaje sonoro, foley y mezcla.')"><div class="ava c2">🔊</div><h3>Diseño Sonoro</h3><p>Foley y mezcla.</p></div>
+</div>
+<div class="footer"><div><b>AGUSTINA BLANCO</b><p>Imagen y Sonido • FADU UBA</p></div><div><a href="https://instagram.com/webotzilla" target="_blank">Instagram — @webotzilla ↗</a><a href="mailto:agusblan2002@gmail.com">agusblan2002@gmail.com ↗</a></div></div>
+</div>
+
+<!-- DISENO -->
+<div class="page" id="p-diseno">
+<div class="pageTop"><button class="back" onclick="backMenu()">← Menú</button><span>🎨 DISEÑO</span></div>
+<h2>DISEÑO</h2><p class="desc">Visual, afiches e interfaces.</p>
+<div class="grid">
+<div class="char" onclick="openGame('Afiche 01','🎨','Afiche y sistema visual.')"><div class="ava c3">🎨</div><h3>Afiche 01</h3><p>Sistema visual.</p></div>
+<div class="char" onclick="openGame('UI 01','💻','Interfaz, botones y tipografía.')"><div class="ava c4">💻</div><h3>UI 01</h3><p>Interfaz y UX.</p></div>
+</div>
+<div class="footer"><div><b>AGUSTINA BLANCO</b><p>Imagen y Sonido • FADU UBA</p></div><div><a href="https://instagram.com/webotzilla" target="_blank">Instagram — @webotzilla ↗</a><a href="mailto:agusblan2002@gmail.com">agusblan2002@gmail.com ↗</a></div></div>
+</div>
+
+<!-- APPS -->
+<div class="page" id="p-apps">
+<div class="pageTop"><button class="back" onclick="backMenu()">← Menú</button><span>📱 APPS</span></div>
+<h2>APPS</h2><p class="desc">Mis aplicaciones. Las diseñé y las programé.</p>
+<div class="apps">
+<div class="appCard"><div style="font-size:40px">🤖</div><h3>IAgus</h3><p>Mi IA personalizada. Me ayuda a estudiar y a crear.</p><button onclick="window.open('https://agusblan.github.io/IAgus/','_blank')">Abrir App ↗</button></div>
+<div class="appCard"><div style="font-size:40px">🗓️</div><h3>Agenda</h3><p>Mi agenda. Tareas, días y proyectos.</p><button onclick="window.open('https://agusblan.github.io/Agenda-/','_blank')">Abrir App ↗</button></div>
+<div class="appCard"><div style="font-size:40px">🎬</div><h3>Study — Mi Estudio</h3><p>Lee PDFs con OCR, resumen con IA, cuestionarios y flashcards con IA, audio y progreso. Para FADU.</p><button onclick="window.open('https://agusblan.github.io/Study/','_blank')">Abrir App ↗</button></div>
+</div>
+<div class="footer"><div><b>AGUSTINA BLANCO</b><p>Imagen y Sonido • FADU UBA</p></div><div><a href="https://instagram.com/webotzilla" target="_blank">Instagram — @webotzilla ↗</a><a href="mailto:agusblan2002@gmail.com">agusblan2002@gmail.com ↗</a></div></div>
+</div>
+
+<!-- SOBRE -->
+<div class="page" id="p-sobre">
+<div class="pageTop"><button class="back" onclick="backMenu()">← Menú</button><span>👤 SOBRE MÍ</span></div>
+<h2>SOBRE MÍ</h2><p class="desc">Soy Agustina Blanco. Estudio Imagen y Sonido en FADU UBA. Me gusta la animación, los videojuegos, la interacción y las películas. Me interesa crear cosas que se vean, se escuchen y se puedan jugar.</p>
+<div class="grid">
+<div class="char"><div class="ava c2">✨</div><h3>Animación</h3><p>Personajes, movimiento y timing.</p></div>
+<div class="char"><div class="ava c5">🎮</div><h3>Videojuegos</h3><p>Mundos, personajes y UI.</p></div>
+<div class="char"><div class="ava c1">🎬</div><h3>Películas</h3><p>Montaje, sonido y dirección.</p></div>
+</div>
+<div class="footer"><div><b>AGUSTINA BLANCO</b><p>Imagen y Sonido • FADU UBA<br>Animación • Videojuegos • Interacción • Películas</p></div><div><a href="https://instagram.com/webotzilla" target="_blank">Instagram — @webotzilla ↗</a><a href="mailto:agusblan2002@gmail.com">agusblan2002@gmail.com ↗</a></div></div>
+</div>
+
+<!-- LOGIN / EDITAR -->
+<div style="text-align:center;padding:14px"><button style="background:none;border:none;color:#ffffff22;cursor:pointer" onclick="document.getElementById('loginBox').style.display='block'">•</button></div>
+<div class="loginBox" id="loginBox">
+<h3 style="margin:0;font-family:Unbounded">Mi cuenta</h3>
+<input id="emailLogin" placeholder="Tu mail">
+<input id="passLogin" type="password" placeholder="Tu contraseña">
+<button style="background:#ffffff20;color:white" onclick="registrarme()">Registrarme</button>
+<button style="background:linear-gradient(90deg,#ff0090,#a100ff);color:white" onclick="login()">Entrar</button>
+<p id="authMsg" style="font-size:13px;color:#ff8fb8"></p>
+</div>
+<div class="editBar" id="editBar"><b>Estás logueada ✅</b><br><span style="font-size:13px">Tocá cualquier título o texto para editarlo.</span><br><button onclick="guardarCambios()">💾 Guardar cambios</button><button onclick="salir()">Salir</button></div>
+
+<script>
+function openPage(id){document.querySelectorAll('.page').forEach(p=>p.classList.remove('show'));document.getElementById('p-'+id).classList.add('show');document.getElementById('menu').classList.add('hide');window.scrollTo(0,0);}
+function backMenu(){document.querySelectorAll('.page').forEach(p=>p.classList.remove('show'));document.getElementById('menu').classList.remove('hide');window.scrollTo(0,0);}
+function openGame(titulo,emoji,desc){let d=document.getElementById('detailJuego');if(!d)return;openPage('juegos');d.classList.add('open');document.getElementById('gameTitle').innerText=emoji+' '+titulo;document.getElementById('gameDesc').innerText=desc;d.scrollIntoView({behavior:'smooth'});}
+function tabGame(id,btn){document.querySelectorAll('.detailTabs button').forEach(b=>b.classList.remove('sel'));btn.classList.add('sel');document.querySelectorAll('.detailPane').forEach(p=>p.classList.remove('show'));document.getElementById('pane-'+id).classList.add('show');}
+</script>
+
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>
+<script>
+const firebaseConfig={apiKey:"TU_API_KEY",authDomain:"portfolio-agus.firebaseapp.com",projectId:"portfolio-agus"};
+firebase.initializeApp(firebaseConfig);
+const auth=firebase.auth(); const db=firebase.firestore();
+async function registrarme(){let e=document.getElementById('emailLogin').value;let p=document.getElementById('passLogin').value;if(p.length<6)return alert('Tu contraseña tiene que tener 6 caracteres mínimo');try{await auth.createUserWithEmailAndPassword(e,p);document.getElementById('authMsg').innerText='Cuenta creada ✅ Ya podés entrar.';}catch(err){document.getElementById('authMsg').innerText=err.message;}}
+async function login(){let e=document.getElementById('emailLogin').value;let p=document.getElementById('passLogin').value;try{await auth.signInWithEmailAndPassword(e,p);}catch(err){document.getElementById('authMsg').innerText='Mail o contraseña incorrectos';}}
+function salir(){auth.signOut();location.reload();}
+function guardarCambios(){let data={titulo:document.querySelector('h1').innerText,fecha:new Date().toISOString()};db.collection('portfolio').doc('contenido').set(data).then(()=>alert('Guardado ✅')).catch(()=>alert('Guardado local.'));localStorage.setItem('portfolio_agus_editado',JSON.stringify(data));}
+auth.onAuthStateChanged(user=>{if(user){document.getElementById('loginBox').style.display='none';document.getElementById('editBar').style.display='block';document.querySelectorAll('.char h3,.char p,.page .desc,.appCard h3,.appCard p').forEach(el=>{el.contentEditable=true;el.style.outline='1px dashed #ff0090';});}});
+</script>
+</body>
+</html>
