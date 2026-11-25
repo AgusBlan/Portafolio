@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AGUSTINA BLANCO — Game Design</title>
+<link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@700;900&family=Space+Grotesk:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box} body{margin:0;font-family:'Space Grotesk',Arial;background:#0e0608;color:#fff}
+a{color:inherit;text-decoration:none}
+input[type=file]{display:none}
+.topBarFixed{position:fixed;top:14px;right:14px;z-index:100;display:flex;gap:8px;align-items:center}
+.loginBtn{width:44px;height:44px;border-radius:50%;background:#000000aa;border:1px solid #ffffff44;color:#fff;font-size:20px;cursor:pointer}
+.userTag{display:none;background:#ff2e6d;padding:8px 12px;border-radius:20px;font-size:12px;font-weight:800}
+.userTag.show{display:block}
+.loginModal{display:none;position:fixed;inset:0;z-index:200;background:rgba(0,0,0,.75);backdrop-filter:blur(6px);align-items:center;justify-content:center;padding:16px}
+.loginModal.open{display:flex}
+.loginCard{background:#16002b;border:1px solid #ffffff22;border-radius:22px;padding:20px;width:100%;max-width:360px;position:relative}
+.loginCard h3{font-family:Unbounded;margin:0}
+.loginCard input{width:100%;padding:12px;border-radius:12px;background:#00000033;color:white;border:1px solid #ffffff33;margin:6px 0}
+.loginCard button{width:100%;padding:12px;border:none;border-radius:12px;font-weight:800;cursor:pointer;margin-top:6px}
+.closeModal{position:absolute;top:10px;right:12px;background:none;border:none;color:#fff;font-size:20px;cursor:pointer}
+.stack{display:flex;flex-direction:column}
+.block{min-height:100vh;position:relative;overflow:hidden;cursor:pointer;display:flex;flex-direction:column;justify-content:flex-end;padding:0;border-bottom:2px solid #000}
+.block .cover{position:absolute;inset:0;background-size:cover;background-position:center;background-color:#1a0e12}
+.block .cover:after{content:'';position:absolute;inset:0;background:linear-gradient(180deg,transparent 20%,rgba(0,0,0,.15) 50%,rgba(0,0,0,.88) 88%)}
+.block .head{position:relative;z-index:2;padding:30px}
+.block .kicker{font-size:12px;letter-spacing:4px;font-weight:700;color:#ffd600}
+.block h2{font-family:Unbounded;font-size:clamp(48px,11vw,96px);line-height:.9;margin:10px 0}
+.block h2 em{font-style:normal;color:#ff2e6d}
+.block p{font-size:18px;line-height:1.6;max-width:640px;margin:0;color:#f5e8ee}
+.block.open{cursor:default;min-height:auto}
+.content{display:none;background:#0e0608;padding:24px}.block.open .content{display:block}
+.topRow{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap}
+.closeBtn{padding:11px 16px;border-radius:30px;background:#fff;color:#0a0012;border:none;font-weight:800;cursor:pointer}
+.gallery{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:14px;margin-top:14px}
+.card{background:#1a0e12;border:1px solid #ffffff22;border-radius:20px;overflow:hidden;cursor:pointer}
+.card img{width:100%;height:240px;object-fit:cover;display:block;background:#ffffff10}
+.card .cardImg{height:240px;display:flex;align-items:center;justify-content:center;font-size:52px;background-size:cover;background-position:center;background-color:#2a121a}
+.cardBody{padding:16px}.cardBody h3{font-size:20px;margin:0 0 6px}.cardBody p{font-size:15px;line-height:1.6;color:#e8d8de;margin:0}
+.card .more{display:none;padding:0 16px 16px;font-size:15px;line-height:1.7}
+.card.expanded{grid-column:1/-1}
+.card.expanded .more{display:block}.card.expanded img,.card.expanded .cardImg{height:420px}
+.addCard{border:2px dashed #ffffff44;background:transparent;display:flex;align-items:center;justify-content:center;min-height:240px;font-size:64px;cursor:pointer;color:#ffffff88}
+.addCard:hover{border-color:#fff;color:#fff}
+.moreImages{display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:10px;margin-top:12px}
+.moreImages img{width:100%;height:130px;object-fit:cover;border-radius:12px}
+.editOnly{display:none}.logged .editOnly{display:flex}
+.editOnly button{background:#fff;color:#0a0012;border:none;padding:9px 12px;border-radius:20px;font-weight:800;cursor:pointer;font-size:12px}
+.poster{border-radius:22px;overflow:hidden;background:#1a0e12;border:1px solid #ffffff22;margin:16px 0}
+.poster .posterImg{height:340px;display:flex;align-items:center;justify-content:center;font-size:80px;background-size:cover;background-position:center;background-color:#2a121a}
+.posterInfo{padding:18px}.posterInfo h3{font-family:Unbounded;font-size:22px;margin:0}.posterInfo p{font-size:16px;line-height:1.6;color:#e8d8de}
+.overview{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:14px}
+.panel{background:#1a0e12;border:1px solid #ffffff22;border-radius:20px;padding:18px}.panel h4{font-family:Unbounded;font-size:13px;letter-spacing:1px;color:#ffd600;margin:0 0 8px}.panel p{font-size:15px;line-height:1.6;color:#e8d8de;margin:0}
+.footer{padding:28px;background:#000;border-top:1px solid #ffffff22;display:flex;justify-content:space-between;flex-wrap:wrap;gap:18px;align-items:center}
+.footer b{font-family:Unbounded;font-size:22px}.footer p{margin:6px 0;color:#e8d8de;font-size:16px;line-height:1.6}
+.footer a{display:inline-block;padding:12px 16px;border-radius:20px;background:#ffffff12;border:1px solid #ffffff22;font-weight:700;font-size:15px;margin:4px 4px 0 0}
+.saveToast{position:fixed;bottom:16px;left:50%;transform:translateX(-50%);background:#fff;color:#0a0012;padding:11px 16px;border-radius:20px;font-weight:800;font-size:14px;display:none;z-index:300}
+.saveToast.show{display:block}
+@media(max-width:720px){.overview{grid-template-columns:1fr}.block .head{padding:20px}}
+</style>
+</head>
+<body id="body">
+
+<div class="topBarFixed"><span class="userTag" id="userTag"></span><button class="loginBtn" onclick="toggleLogin()">×</button></div>
+<div class="loginModal" id="loginModal"><div class="loginCard"><button class="closeModal" onclick="toggleLogin()">×</button><h3 id="loginTitle"></h3><input id="emailLogin" placeholder=""><input id="passLogin" type="password" placeholder=""><button style="background:#ffffff20;color:white" onclick="registrarme()"></button><button style="background:linear-gradient(90deg,#ff2e6d,#a100ff);color:white" onclick="login()"></button><button style="background:transparent;color:#fff;border:1px solid #ffffff33;display:none" id="logoutBtn" onclick="salir()"></button><p id="authMsg" style="font-size:13px;color:#ff8fb8"></p></div></div>
+<div class="saveToast" id="saveToast"></div>
+
+<div class="stack">
+<div class="block" id="block-carrera" onclick="openBlock('block-carrera')">
+<div class="cover" id="cover-carrera" style="background-image:linear-gradient(135deg,#3a0a1a,#0e0608)"></div>
+<div class="head"><div class="kicker editable">2D GAME ARTIST • IMAGEN Y SONIDO — FADU UBA</div><h2 class="editable">DE LA<br><em>CARRERA</em></h2><p class="editable">Videojuegos, animación, películas y diseño.</p><div class="editOnly" style="margin-top:12px" onclick="event.stopPropagation()"><button onclick="pickCover('block-carrera')">＋</button></div></div>
+<div class="content" onclick="event.stopPropagation()">
+<div class="topRow"><b style="font-family:Unbounded" class="editable">DE LA CARRERA</b><button class="closeBtn" onclick="closeBlock('block-carrera')">↑</button></div>
+<div class="poster"><div class="posterImg" id="poster-carrera"></div><div class="posterInfo"><h3 class="editable"></h3><p class="editable"></p><div class="editOnly"><button onclick="pickPoster('poster-carrera')">＋</button></div></div></div>
+<div class="overview"><div class="panel"><h4 class="editable">PROJECT OVERVIEW</h4><p class="editable"></p></div><div class="panel"><h4 class="editable">SCENARIO OVERVIEW</h4><p class="editable"></p></div><div class="panel"><h4 class="editable">WORLDVIEW SETTING</h4><p class="editable"></p></div><div class="panel"><h4 class="editable">KEYWORD EXTRACTION</h4><p class="editable"></p></div></div>
+<div class="gallery" id="gallery-carrera"></div>
+</div>
+</div>
+
+<div class="block" id="block-personal" onclick="openBlock('block-personal')">
+<div class="cover" id="cover-personal" style="background-image:linear-gradient(135deg,#0a2a3a,#0e0608)"></div>
+<div class="head"><div class="kicker editable">PERSONAL • CONCEPT ART</div><h2 class="editable">PERSONAL</h2><p class="editable"></p><div class="editOnly" style="margin-top:12px" onclick="event.stopPropagation()"><button onclick="pickCover('block-personal')">＋</button></div></div>
+<div class="content" onclick="event.stopPropagation()"><div class="topRow"><b style="font-family:Unbounded" class="editable">PERSONAL</b><button class="closeBtn" onclick="closeBlock('block-personal')">↑</button></div><div class="gallery" id="gallery-personal"></div></div>
+</div>
+
+<div class="block" id="block-sobre" onclick="openBlock('block-sobre')">
+<div class="cover" id="cover-sobre" style="background-image:linear-gradient(135deg,#3a2a0a,#0e0608)"></div>
+<div class="head"><div class="kicker editable">GAME DESIGNER • 2D GAME ARTIST</div><h2 class="editable">SOBRE<br><em>MÍ</em></h2><p class="editable">Agustina Blanco. Animación, videojuegos, interacción y películas.</p><div class="editOnly" style="margin-top:12px" onclick="event.stopPropagation()"><button onclick="pickCover('block-sobre')">＋</button></div></div>
+<div class="content" onclick="event.stopPropagation()"><div class="topRow"><b style="font-family:Unbounded" class="editable">SOBRE MÍ</b><button class="closeBtn" onclick="closeBlock('block-sobre')">↑</button></div><div class="poster"><div class="posterImg" id="poster-sobre"></div><div class="posterInfo"><h3 class="editable">Agustina Blanco</h3><p class="editable">Imagen y Sonido — FADU UBA.</p><div class="editOnly"><button onclick="pickPoster('poster-sobre')">＋</button></div></div></div></div>
+</div>
+</div>
+
+<div class="footer"><div><b class="editable">AGUSTINA BLANCO</b><p class="editable">Imagen y Sonido • FADU UBA<br>Animación • Videojuegos • Interacción • Películas</p></div><div><a href="https://instagram.com/webotzilla" target="_blank" class="editable">Instagram — @webotzilla ↗</a><a href="mailto:agusblan2002@gmail.com" class="editable">agusblan2002@gmail.com ↗</a></div></div>
+
+<input type="file" id="fileCover" accept="image/*" onchange="onCoverFile(event)">
+<input type="file" id="filePoster" accept="image/*" onchange="onPosterFile(event)">
+<input type="file" id="fileCard" accept="image/*" multiple onchange="onCardFiles(event)">
+
+<script>
+let currentBlock=null, currentPoster=null, currentCardBtn=null, isLogged=false;
+let proyectos={carrera:[],personal:[]};
+function openBlock(id){document.querySelectorAll('.block').forEach(b=>b.classList.remove('open'));document.getElementById(id).classList.add('open');currentBlock=id;document.getElementById(id).scrollIntoView({behavior:'smooth'});}
+function closeBlock(id){document.getElementById(id).classList.remove('open');}
+function expandCard(card){let was=card.classList.contains('expanded');document.querySelectorAll('.card').forEach(c=>c.classList.remove('expanded'));if(!was)card.classList.add('expanded');card.scrollIntoView({behavior:'smooth',block:'center'});}
+function toggleLogin(){document.getElementById('loginModal').classList.toggle('open');}
+function showToast(){let t=document.getElementById('saveToast');t.classList.add('show');setTimeout(()=>t.classList.remove('show'),2000);}
+async function saveToCloud(){
+  if(!window.db) return;
+  try{
+    let editables=Array.from(document.querySelectorAll('.editable')).map(e=>e.innerHTML);
+    await window.db.collection('portfolio').doc('agus').set({proyectos:proyectos, covers:{carrera:document.getElementById('cover-carrera').style.backgroundImage, personal:document.getElementById('cover-personal').style.backgroundImage, sobre:document.getElementById('cover-sobre').style.backgroundImage}, posters:{carrera:document.getElementById('poster-carrera').style.backgroundImage, sobre:document.getElementById('poster-sobre').style.backgroundImage}, editables:editables, fecha:new Date().toISOString()});
+    showToast();
+  }catch(e){}
+}
+async function loadFromCloud(){
+  if(!window.db) return renderGalleries();
+  try{
+    let doc=await window.db.collection('portfolio').doc('agus').get();
+    if(doc.exists){
+      let d=doc.data();
+      if(d.proyectos) proyectos=d.proyectos;
+      if(d.covers){ if(d.covers.carrera) document.getElementById('cover-carrera').style.backgroundImage=d.covers.carrera; if(d.covers.personal) document.getElementById('cover-personal').style.backgroundImage=d.covers.personal; if(d.covers.sobre) document.getElementById('cover-sobre').style.backgroundImage=d.covers.sobre; }
+      if(d.posters){ if(d.posters.carrera){let el=document.getElementById('poster-carrera'); el.style.backgroundImage=d.posters.carrera;} if(d.posters.sobre){let el=document.getElementById('poster-sobre'); el.style.backgroundImage=d.posters.sobre;} }
+      if(d.editables){ let els=document.querySelectorAll('.editable'); d.editables.forEach((v,i)=>{ if(els[i]) els[i].innerHTML=v; }); }
+    }
+  }catch(e){}
+  renderGalleries();
+}
+function renderGalleries(){
+  ['carrera','personal'].forEach(key=>{
+    let gal=document.getElementById('gallery-'+key); if(!gal) return;
+    gal.innerHTML='';
+    (proyectos[key]||[]).forEach((p,idx)=>{
+      let div=document.createElement('div'); div.className='card'; div.setAttribute('onclick','expandCard(this)');
+      div.innerHTML=`<div class="cardImg" style="${p.img?`background-image:url(${p.img});`:''}"></div><div class="cardBody"><h3 class="editable">${p.titulo||''}</h3><p class="editable">${p.desc||''}</p></div><div class="more"><p class="editable">${p.info||''}</p><div class="moreImages">${(p.images||[]).map(im=>`<img src="${im}">`).join('')}</div><div class="editOnly"><button onclick="pickCardImg(this, '${key}', ${idx})">＋</button><button onclick="deleteProject('${key}',${idx})" style="background:#ff2e6d;color:white">×</button></div></div>`;
+      gal.appendChild(div);
+    });
+    let add=document.createElement('div'); add.className='addCard editOnly'; add.innerText='+'; add.setAttribute('onclick',`addCard('${key}')`); gal.appendChild(add);
+    if(isLogged){ gal.querySelectorAll('.editable').forEach(el=>{el.contentEditable=true; el.style.outline='1px dashed #ff2e6d'; el.addEventListener('input',()=>{syncEdits(key);});}); }
+  });
+}
+function syncEdits(key){
+  let gal=document.getElementById('gallery-'+key); let cards=gal.querySelectorAll('.card');
+  proyectos[key]=Array.from(cards).map(c=>{let imgs=Array.from(c.querySelectorAll('.moreImages img')).map(i=>i.src); let main=c.querySelector('.cardImg').style.backgroundImage; let m=main?main.slice(5,-2):''; return {titulo:c.querySelector('h3')?.innerText||'', desc:c.querySelector('.cardBody p')?.innerText||'', info:c.querySelector('.more p')?.innerText||'', img:m, images:imgs};});
+  saveToCloud();
+}
+function addCard(key){ if(!isLogged) return toggleLogin(); proyectos[key].push({titulo:'', desc:'', info:'', img:'', images:[]}); renderGalleries(); saveToCloud(); }
+function deleteProject(key,idx){ proyectos[key].splice(idx,1); renderGalleries(); saveToCloud(); }
+function pickCover(blockId){ if(!isLogged) return toggleLogin(); currentBlock=blockId; document.getElementById('fileCover').click(); }
+function pickPoster(posterId){ if(!isLogged) return toggleLogin(); currentPoster=posterId; document.getElementById('filePoster').click(); }
+function pickCardImg(btn,key,idx){ if(!isLogged) return toggleLogin(); currentCardBtn={btn,key,idx}; document.getElementById('fileCard').click(); }
+function onCoverFile(e){ let f=e.target.files[0]; if(!f) return; let r=new FileReader(); r.onload=()=>{ document.getElementById(currentBlock).querySelector('.cover').style.backgroundImage=`url(${r.result})`; saveToCloud(); }; r.readAsDataURL(f); }
+function onPosterFile(e){ let f=e.target.files[0]; if(!f) return; let r=new FileReader(); r.onload=()=>{ let el=document.getElementById(currentPoster); el.style.backgroundImage=`url(${r.result})`; saveToCloud(); }; r.readAsDataURL(f); }
+function onCardFiles(e){ let files=[...e.target.files]; if(!files.length||!currentCardBtn) return; let {key,idx}=currentCardBtn; files.forEach(f=>{ let r=new FileReader(); r.onload=()=>{ if(!proyectos[key][idx].img) proyectos[key][idx].img=r.result; else proyectos[key][idx].images.push(r.result); renderGalleries(); saveToCloud(); }; r.readAsDataURL(f); }); }
+document.querySelectorAll('.editable').forEach(el=>{ el.addEventListener('input',()=>{ if(isLogged) saveToCloud(); }); });
+</script>
+
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>
+<script>
+const firebaseConfig={apiKey:"TU_API_KEY",authDomain:"portfolio-agus.firebaseapp.com",projectId:"portfolio-agus"};
+firebase.initializeApp(firebaseConfig);
+const auth=firebase.auth(); const db=firebase.firestore(); window.db=db;
+auth.setPersistence(firebase.auth.Auth.Persistence.LOCAL);
+async function registrarme(){let e=document.getElementById('emailLogin').value;let p=document.getElementById('passLogin').value;if(p.length<6)return;try{await auth.createUserWithEmailAndPassword(e,p);toggleLogin();}catch(err){document.getElementById('authMsg').innerText=err.message;}}
+async function login(){let e=document.getElementById('emailLogin').value;let p=document.getElementById('passLogin').value;try{await auth.signInWithEmailAndPassword(e,p);toggleLogin();}catch(err){document.getElementById('authMsg').innerText='';}}
+function salir(){auth.signOut();location.reload();}
+auth.onAuthStateChanged(user=>{
+  if(user){
+    isLogged=true; document.body.classList.add('logged');
+    document.getElementById('userTag').classList.add('show'); document.getElementById('userTag').innerText=user.email.split('@')[0].toUpperCase()+' ●';
+    document.getElementById('logoutBtn').style.display='block';
+    document.querySelectorAll('.editable').forEach(el=>{el.contentEditable=true; el.style.outline='1px dashed #ff2e6d';});
+  } else { isLogged=false; document.body.classList.remove('logged'); document.getElementById('userTag').classList.remove('show'); }
+  loadFromCloud();
+});
+setTimeout(()=>{ if(!window.db) renderGalleries(); },1500);
+</script>
+</body>
+</html>
