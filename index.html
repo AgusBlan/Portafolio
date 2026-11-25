@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>AGUS BLAN — Imagen y Sonido • Visual • Interactivo</title>
+<title>AGUSTINA BLANCO — Imagen y Sonido • Visual • Interactivo</title>
 <link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@500;700;900&family=Space+Grotesk:wght@400;500;700&display=swap" rel="stylesheet">
 <style>
 *{box-sizing:border-box}body{margin:0;font-family:'Space Grotesk',Arial;background:#0b0014;color:white;overflow-x:hidden}
@@ -33,7 +33,7 @@ h2{font-family:Unbounded;font-size:26px;margin:30px 0 6px}h2 small{display:block
 </head>
 <body>
 <div class="bg"></div>
-<div class="top"><div class="logo">AGUS<span>•BLAN</span></div><div class="menu"><a href="#yo">Yo</a><a href="#proyectos">Proyectos</a><a href="#apps">Apps</a><a href="#contacto">Contacto</a></div></div>
+<div class="top"><div class="logo">AGUSTINA<span>•BLANCO</span></div><div class="menu"><a href="#yo">Yo</a><a href="#proyectos">Proyectos</a><a href="#apps">Apps</a><a href="#contacto">Contacto</a></div></div>
 
 <div class="hero" id="yo">
 <span class="chip">✦ ESTUDIANTE • FADU UBA • BUENOS AIRES ✦</span>
@@ -44,14 +44,14 @@ h2{font-family:Unbounded;font-size:26px;margin:30px 0 6px}h2 small{display:block
 </div>
 
 <div class="wrap">
-<h2 id="proyectos">MIS PROYECTOS <small>Vacío a propósito para que lo llenes vos. Tocá 🔒 Admin abajo para agregar los tuyos cuando quieras. Nada inventado.</small></h2>
+<h2 id="proyectos">MIS PROYECTOS</h2>
 <div class="grid" id="gridProyectos">
 <div class="card" onclick="abrir('Agregar tu proyecto','➕','Tocá Admin abajo para agregar tu primer proyecto real.','Nuevo')"><div class="cover g1"><span>VACÍO • TUYO</span><b>➕</b></div><div class="body"><h3>Tu primer proyecto</h3><p>Acá va tu corto, tu animación o tu diseño. Vos lo subís cuando quieras.</p></div></div>
 <div class="card" onclick="abrir('Agregar tu juego','🎮','Acá va tu concept, tu personaje o tu interfaz de juego.','Nuevo')"><div class="cover g2"><span>VACÍO • TUYO</span><b>🎮</b></div><div class="body"><h3>Tu primer juego / concept</h3><p>Personaje, mundo, UI. Todo tuyo, nada inventado.</p></div></div>
 <div class="card" onclick="abrir('Agregar tu diseño','🎨','Acá va tu diseño visual, tu afiche, tu animación.','Nuevo')"><div class="cover g3"><span>VACÍO • TUYO</span><b>🎨</b></div><div class="body"><h3>Tu primer diseño</h3><p>Diseño visual, animación, lo que quieras mostrar.</p></div></div>
 </div>
 
-<h2 id="apps">MIS APPS • HECHAS POR MÍ <small>Las 3 que ya hiciste, con link directo para entrar.</small></h2>
+<h2 id="apps">MIS APPS</h2>
 <div class="apps">
 <div class="app"><div class="ico g1">🤖</div><div style="flex:1;min-width:220px"><h3>IAgus — Mi IA personalizada</h3><p>Mi asistente con mi estilo. Me ayuda a estudiar, a crear ideas y a organizar mis proyectos de Imagen y Sonido.</p><div class="meta">Cómo entrar: tocá Abrir App • Funciona en celu y tablet • Hecha por mí</div></div><div class="btns"><button class="btn btn-neon" onclick="window.open('https://agusblan.github.io/IAgus/','_blank')">Abrir App ↗</button></div></div>
 <div class="app"><div class="ico g2">🗓️</div><div style="flex:1;min-width:220px"><h3>Agenda — Mi agenda</h3><p>Mi agenda personal para organizar días, tareas y proyectos. Simple, rosita y práctica para usar todos los días.</p><div class="meta">Cómo entrar: tocá Abrir App • Guardá el link en tu celu</div></div><div class="btns"><button class="btn btn-neon" onclick="window.open('https://agusblan.github.io/Agenda-/','_blank')">Abrir App ↗</button></div></div>
@@ -68,15 +68,6 @@ h2{font-family:Unbounded;font-size:26px;margin:30px 0 6px}h2 small{display:block
 <div class="modal" id="modalAdmin"><div class="mbox"><button class="close" onclick="cerrarAdmin()">✕</button><h3>🔒 Solo Agus</h3><div id="adminLogin"><p style="font-size:13px">Poné tu contraseña para editar. El resto solo ve.</p><input id="adminPass" type="password" placeholder="Tu contraseña" style="width:100%;padding:12px;border-radius:12px;border:1px solid #ffffff33;background:#00000033;color:white"><button class="btn btn-neon" onclick="entrarAdmin()" style="margin-top:10px;width:100%">Entrar</button><p id="adminError" style="color:#ff6a9a;display:none">Contraseña incorrecta</p><p style="font-size:11px;color:#999">Ejemplo: agus2026 — cambiala en el código</p></div><div id="adminPanel" style="display:none"><p style="font-size:13px">Estás en modo edición. Tocá cualquier título o texto y editalo.</p><input id="nuevoTitulo" placeholder="Título del proyecto" style="width:100%;padding:10px;border-radius:10px;background:#00000033;color:white;border:1px solid #ffffff33;margin:5px 0"><select id="nuevoCat" style="width:100%;padding:10px;border-radius:10px;background:#16002b;color:white"><option value="cine">🎬 Imagen y Sonido / Película</option><option value="juego">🎮 Videojuego</option><option value="diseno">🎨 Diseño / Animación</option></select><input id="nuevoEmoji" placeholder="Emoji ej: 🎬" style="width:100%;padding:10px;border-radius:10px;background:#00000033;color:white;border:1px solid #ffffff33;margin:5px 0"><textarea id="nuevoTexto" placeholder="De qué trata..." style="width:100%;padding:10px;border-radius:10px;background:#00000033;color:white;border:1px solid #ffffff33"></textarea><input id="nuevoFoto" placeholder="Link de imagen (Drive / Imgur / Instagram)" style="width:100%;padding:10px;border-radius:10px;background:#00000033;color:white;border:1px solid #ffffff33;margin:5px 0"><button class="btn btn-neon" onclick="agregarProyectoAdmin()" style="width:100%;margin-top:8px">+ Agregar proyecto</button><button class="btn btn-ghost" onclick="guardarTodoAdmin()" style="width:100%;margin-top:8px">💾 Guardar todo</button><button class="btn" onclick="salirAdmin()" style="width:100%;margin-top:8px;background:#ffffff20;color:white">Salir</button></div></div></div>
 
 <script>
-function abrir(t,e,txt,tags){document.getElementById('mTitulo').innerText=t;document.getElementById('mEmoji').innerText=e;document.getElementById('mTexto').innerText=txt;document.getElementById('mTags').innerText=tags;document.getElementById('modal').classList.add('open')}
-function cerrar(){document.getElementById('modal').classList.remove('open')}
-const CONTRASENA_ADMIN="agus2026";
-function abrirAdmin(){document.getElementById('modalAdmin').classList.add('open')}
-function cerrarAdmin(){document.getElementById('modalAdmin').classList.remove('open')}
-function entrarAdmin(){if(document.getElementById('adminPass').value===CONTRASENA_ADMIN){document.getElementById('adminLogin').style.display='none';document.getElementById('adminPanel').style.display='block';document.querySelectorAll('.body h3,.body p,.hero h1,.hero p').forEach(el=>{el.contentEditable=true;el.style.outline='2px dashed #ff00aa'});alert('Modo edición activado.')}else{document.getElementById('adminError').style.display='block'}}
-function salirAdmin(){document.querySelectorAll('[contenteditable]').forEach(el=>{el.contentEditable=false;el.style.outline='none'});document.getElementById('adminPanel').style.display='none';document.getElementById('adminLogin').style.display='block';cerrarAdmin()}
-function agregarProyectoAdmin(){let titulo=document.getElementById('nuevoTitulo').value.trim();let emoji=document.getElementById('nuevoEmoji').value.trim()||'✨';let texto=document.getElementById('nuevoTexto').value.trim()||'Proyecto nuevo.';let foto=document.getElementById('nuevoFoto').value.trim();if(!titulo)return alert('Poné el título');let grid=document.getElementById('gridProyectos');let div=document.createElement('div');div.className='card';div.setAttribute('onclick',`abrir('${titulo}','${emoji}','${texto}','Nuevo')`);let cover=foto?`<div class="cover" style="background:url('${foto}') center/cover"><span>NUEVO</span></div>`:`<div class="cover g2"><span>NUEVO</span><b>${emoji}</b></div>`;div.innerHTML=cover+`<div class="body"><h3 contenteditable="true">${titulo}</h3><p contenteditable="true">${texto}</p></div>`;grid.prepend(div);document.getElementById('nuevoTitulo').value='';document.getElementById('nuevoTexto').value='';document.getElementById('nuevoFoto').value='';alert('Proyecto agregado. Tocá Guardar todo.')}
-function guardarTodoAdmin(){localStorage.setItem('portfolio_agus_html',document.documentElement.outerHTML);alert('Guardado. Para que lo vean todos, subí este archivo actualizado a GitHub como index.html y tocá Replace.');salirAdmin()}
 </script>
 </body>
 </html>
